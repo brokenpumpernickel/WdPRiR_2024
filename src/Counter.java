@@ -6,6 +6,7 @@
 //    }
 //}
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 //public class Counter {
@@ -28,17 +29,25 @@ import java.util.concurrent.locks.ReentrantLock;
 //    }
 //}
 
+//public class Counter {
+//    private int count = 0;
+//    private ReentrantLock lock = new ReentrantLock();
+//
+//    public int getAndIncrement() {
+//        lock.lock();
+//        try {
+//            return count++;
+//        } finally {
+//            lock.unlock();
+//        }
+//
+//    }
+//}
+
 public class Counter {
-    private int count = 0;
-    private ReentrantLock lock = new ReentrantLock();
+    private final AtomicInteger count = new AtomicInteger(0);
 
     public int getAndIncrement() {
-        lock.lock();
-        try {
-            return count++;
-        } finally {
-            lock.unlock();
-        }
-
+        return count.getAndIncrement();
     }
 }
