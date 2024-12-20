@@ -44,10 +44,25 @@ import java.util.concurrent.locks.ReentrantLock;
 //    }
 //}
 
+//public class Counter {
+//    private final AtomicInteger count = new AtomicInteger(0);
+//
+//    public int getAndIncrement() {
+//        return count.getAndIncrement();
+//    }
+//}
+
 public class Counter {
-    private final AtomicInteger count = new AtomicInteger(0);
+    private int count = 0;
+    private PoorLock lock = new TestTestAndSetLock();
 
     public int getAndIncrement() {
-        return count.getAndIncrement();
+        lock.lock();
+        try {
+            return count++;
+        } finally {
+            lock.unlock();
+        }
+
     }
 }
